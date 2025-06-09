@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gokulan's Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+      window.emailjs = {
+        init: function(publicKey) { /* implementation */ },
+        send: function(serviceId, templateId, templateParams) { /* implementation */ }
+      };
+    </script>
+    <meta name="description" content="Gokulan's Portfolio" />
+    <meta name="author" content="Gokulan" />
+
+    <meta property="og:title" content="Gokulan's Portfolio" />
+    <meta property="og:description" content="Gokulan's Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <style>
+      .favicon {
+        width: 32px;
+        height: 32px;
+      }
+    </style>
+    <link rel="icon" href="giphy.gif" class="favicon" type="image/gif" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@gokulan" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx?t=${Date.now()}" defer></script>
+  </body>
+</html>
