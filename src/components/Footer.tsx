@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
           <div className="md:col-span-2">
             <Link to="/" className="inline-block mb-4">
               <h2 className={`text-2xl font-bold ${theme === 'dark' ? 'text-gradient' : 'text-gradient-light'}`}>
-                Gokulan
+                Gokulan V
               </h2>
             </Link>
             <p className={`max-w-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
