@@ -39,7 +39,7 @@ const HeroSection = () => {
         <div className="max-w-md mx-auto md:max-w-none">
         <ParallaxSection className="flex flex-col items-center md:items-start" speed={0.05} direction="vertical" intensity="light">
           <h1 className={`text-3xl md:text-5xl lg:text-6xl font-bold mb-4 ${theme === 'dark' ? 'text-white text-gradient' : 'text-gray-900 text-gradient-light'}`}>
-            Gokulan
+            Gokulan V
           </h1>
           <div className="h-1 w-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mb-6 mx-auto md:mx-0"></div>
           <h2 className={`text-lg md:text-xl lg:text-2xl font-medium mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
