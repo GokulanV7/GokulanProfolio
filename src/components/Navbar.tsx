@@ -1,13 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, User, LogOut } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Button } from './ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path: string) => location.pathname === path;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,13 +33,31 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const navLinks = [
+  const { currentUser, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  type NavLink = {
+    path: string;
+    label: string;
+  };
+
+  const navLinks: NavLink[] = [
     { path: '/', label: 'Home' },
     { path: '/projects', label: 'Projects' },
     { path: '/about', label: 'Skills' },
     { path: '/videos', label: 'Videos' },
-    { path: '/contact', label: 'Contact' }
+    { path: '/contact', label: 'Contact' },
+    ...(currentUser?.uid === 'YOUR_ADMIN_UID' ? [{ path: '/admin', label: 'Admin' }] : [])
   ];
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      navigate('/');
+    } catch (error) {
+      console.error('Failed to sign out', error);
+    }
+  };
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
@@ -42,7 +71,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-8">
+          <div className="hidden md:flex md:items-center md:space-x-6">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -52,85 +81,183 @@ const Navbar = () => {
                 }`}
               >
                 {link.label}
-                {/* Active indicator */}
-                <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-purple-500 transition-opacity duration-300 ${
-                  isActive(link.path) ? 'opacity-100' : 'opacity-0'
-                }`} />
-                {/* Hover indicator */}
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-500 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
+                <span 
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-purple-400 transition-all duration-300 ${
+                    isActive(link.path) ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}
+                />
               </Link>
             ))}
+            
+            {currentUser ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={currentUser.photoURL || ''} alt={currentUser.displayName || 'User'} />
+                      <AvatarFallback>
+                        {currentUser.displayName?.charAt(0) || currentUser.email?.charAt(0).toUpperCase() || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {currentUser.displayName || 'User'}
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {currentUser.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate('/profile')}>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                  {currentUser.uid === 'YOUR_ADMIN_UID' && (
+                    <DropdownMenuItem onClick={() => navigate('/admin')}>
+                      <span>Admin Dashboard</span>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="flex space-x-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => navigate('/login')}
+                  className="text-white border-white/30 hover:bg-white/10 hover:text-white"
+                >
+                  Login
+                </Button>
+                <Button 
+                  variant="default" 
+                  size="sm" 
+                  onClick={() => navigate('/signup')}
+                  className="bg-purple-600 hover:bg-purple-700"
+                >
+                  Sign Up
+                </Button>
+              </div>
+            )}
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile menu button and auth */}
+          <div className="flex items-center space-x-4 md:hidden">
+            {!mobileMenuOpen && !currentUser && (
+              <div className="flex space-x-2">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => navigate('/login')}
+                  className="text-white hover:bg-white/10"
+                >
+                  Login
+                </Button>
+              </div>
+            )}
+            {currentUser && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={currentUser.photoURL || ''} alt={currentUser.displayName || 'User'} />
+                      <AvatarFallback>
+                        {currentUser.displayName?.charAt(0) || currentUser.email?.charAt(0).toUpperCase() || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {currentUser.displayName || 'User'}
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {currentUser.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate('/profile')}>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                  {currentUser.uid === 'YOUR_ADMIN_UID' && (
+                    <DropdownMenuItem onClick={() => navigate('/admin')}>
+                      <span>Admin Dashboard</span>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
             <button
-              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 hover:bg-purple-800/20 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              aria-expanded={mobileMenuOpen}
+              className="text-white hover:text-purple-200 focus:outline-none"
+              aria-label="Toggle menu"
             >
-              <span className="sr-only">
-                {mobileMenuOpen ? 'Close main menu' : 'Open main menu'}
-              </span>
               {mobileMenuOpen ? (
-                <X className="h-6 w-6" aria-hidden="true" />
+                <X className="h-6 w-6" />
               ) : (
-                <Menu className="h-6 w-6" aria-hidden="true" />
+                <Menu className="h-6 w-6" />
               )}
             </button>
           </div>
-        </div>
-      </div>
 
-      {/* Mobile Navigation */}
-      <div className="md:hidden">
-        {/* Overlay */}
-        <div
-          className={`fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
-            mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          }`}
-          onClick={() => setMobileMenuOpen(false)}
-        />
-
-        {/* Side Panel */}
-        <div
-          className={`fixed top-0 left-0 z-50 w-full h-screen bg-gradient-to-br from-purple-400/30 to-purple-600/30 backdrop-blur-md shadow-xl transform transition-transform duration-300 ease-in-out ${
-            mobileMenuOpen ? 'translate-y-0' : 'translate-y-full'
-          }`}
-        >
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-8">
-              <Link
-                to="/"
-                className="text-xl font-bold text-white"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Gokulan
-              </Link>
-              <button
-                type="button"
-                className="p-2 rounded-md text-white hover:text-purple-200 hover:bg-purple-800/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <X className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="flex flex-col space-y-6 mt-8">
+          {/* Mobile menu, show/hide based on menu state */}
+          <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`}>
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`text-lg font-medium transition-colors duration-200 border-l-4 pl-4 ${
+                  className={`block px-3 py-2 rounded-md text-base font-medium ${
                     isActive(link.path)
-                      ? 'text-white border-purple-400'
-                      : 'text-gray-300 border-transparent hover:text-white hover:border-purple-400'
+                      ? 'text-white bg-purple-900/50'
+                      : 'text-gray-300 hover:bg-purple-800/50 hover:text-white'
                   }`}
-                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.label}
                 </Link>
               ))}
+              {!currentUser ? (
+                <>
+                  <Link
+                    to="/login"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-purple-800/50 hover:text-white"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-white bg-purple-600 hover:bg-purple-700"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              ) : (
+                <button
+                  onClick={handleSignOut}
+                  className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-purple-800/50 hover:text-white"
+                >
+                  Sign Out
+                </button>
+              )}
             </div>
           </div>
         </div>
