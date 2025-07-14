@@ -12,26 +12,22 @@ const Videos = () => {
     {
       title: "Flutter App Demo",
       description: "A walkthrough of my e-commerce app built with Flutter",
-      thumbnail: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80",
-      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      thumbnail: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80"
     },
     {
       title: "FALO AI Demo",
       description: "Demonstrating our fake news detection algorithm in action",
-      thumbnail: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=800&q=80",
-      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      thumbnail: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=800&q=80"
     },
     {
       title: "Flutter UI Tutorial",
       description: "How to build beautiful user interfaces with Flutter",
-      thumbnail: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
-      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      thumbnail: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80"
     },
     {
       title: "Machine Learning Pipeline",
       description: "Building an end-to-end ML pipeline for real-world applications",
-      thumbnail: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80",
-      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      thumbnail: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80"
     }
   ];
   
@@ -53,22 +49,19 @@ const Videos = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {videos.map((video, index) => (
               <ParallaxSection key={index} speed={0.05 + (index * 0.02)}>
-                <a 
-                  href={video.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                <div 
                   className={`group block overflow-hidden rounded-xl ${theme === 'dark' ? 
-                    'bg-gray-800 hover:bg-gray-700/80' : 
-                    'bg-gray-100 hover:bg-gray-200/80'} transition-colors`}
+                    'bg-gray-800' : 
+                    'bg-gray-100'}`}
                 >
                   <div className="relative aspect-video overflow-hidden">
                     <img 
                       src={video.thumbnail} 
                       alt={video.title} 
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" 
+                      className="w-full h-full object-cover" 
                     />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className={`rounded-full p-6 transform group-hover:scale-110 transition-transform ${theme === 'dark' ? 
+                      <div className={`rounded-full p-6 ${theme === 'dark' ? 
                         'bg-black/50' : 
                         'bg-white/50'}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={theme === 'dark' ? 'text-white' : 'text-gray-900'}>
@@ -85,7 +78,7 @@ const Videos = () => {
                       {video.description}
                     </p>
                   </div>
-                </a>
+                </div>
               </ParallaxSection>
             ))}
           </div>
