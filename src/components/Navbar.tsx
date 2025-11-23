@@ -72,15 +72,17 @@ const Navbar = () => {
 
             {/* Mobile Navigation Menu */}
             {isOpen && (
-                <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-100 p-4 shadow-lg animate-in slide-in-from-top-5">
-                    <div className="flex flex-col space-y-4">
+                <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-lg border-b border-gray-200 shadow-xl">
+                    <div className="container mx-auto px-4 py-6 flex flex-col space-y-3">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 to={link.path}
                                 className={cn(
-                                    'text-base font-medium transition-colors hover:text-black',
-                                    location.pathname === link.path ? 'text-black' : 'text-gray-500'
+                                    'text-lg font-medium transition-all py-2 px-3 rounded-lg',
+                                    location.pathname === link.path 
+                                        ? 'text-black bg-gray-100' 
+                                        : 'text-gray-600 hover:bg-gray-50 hover:text-black'
                                 )}
                                 onClick={() => setIsOpen(false)}
                             >
@@ -91,10 +93,10 @@ const Navbar = () => {
                             href="/Gokulan Resume-2.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-4 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors text-center"
+                            className="mt-2 px-6 py-3 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition-colors text-center"
                             onClick={() => setIsOpen(false)}
                         >
-                            Resume
+                            Download Resume
                         </a>
                     </div>
                 </div>

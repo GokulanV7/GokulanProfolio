@@ -35,7 +35,7 @@ const Home = () => {
                             transition={{ delay: 0.3 }}
                             className="text-base sm:text-lg md:text-2xl text-gray-600 max-w-xl leading-relaxed"
                         >
-                            Developing innovative web applications and integrating cutting-edge <span className="bg-black text-white px-2 py-1 rounded-md mx-1 inline-block">AI</span> technologies. Building real-world <span className="bg-black text-white px-2 py-1 rounded-md mx-1 inline-block">Agentic AI</span> solutions with LangChain, CrewAI, smolagents, and custom frameworks.
+                            Developing innovative web and mobile applications integrated with cutting-edge AI technologies. Building real-world <span className="bg-black text-white px-2 py-1 rounded-md mx-1 inline-block">Agentic AI</span> solutions with LangChain, CrewAI, smolagents, and custom frameworks.
                         </motion.p>
                     </div>
 
