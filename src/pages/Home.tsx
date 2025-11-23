@@ -89,7 +89,7 @@ const Home = () => {
                         className="relative w-full max-w-sm md:max-w-md mx-auto pb-8 md:pb-20 md:-mt-32"
                     >
                         <video
-                            src="/dist/Generated File November 23, 2025 - 4_46PM.mp4"
+                            src="/Generated File November 23, 2025 - 4_46PM.mp4"
                             autoPlay
                             loop
                             muted

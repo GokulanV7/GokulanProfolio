@@ -52,7 +52,7 @@ const Navbar = () => {
                         </Link>
                     ))}
                     <a
-                        href="/dist/Gokulan Resume-2.pdf"
+                        href="/Gokulan Resume-2.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="px-4 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors"
@@ -88,7 +88,7 @@ const Navbar = () => {
                             </Link>
                         ))}
                         <a
-                            href="/dist/Gokulan Resume-2.pdf"
+                            href="/Gokulan Resume-2.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="px-4 py-2 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors text-center"

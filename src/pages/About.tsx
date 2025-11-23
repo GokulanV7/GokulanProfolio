@@ -31,7 +31,7 @@ const About = () => {
                     className="relative aspect-[2/3] rounded-2xl overflow-hidden bg-gray-100 max-w-sm md:max-w-lg mx-auto w-full"
                 >
                     <img
-                        src="/dist/Web_Photo_Editor.jpg"
+                        src="/Web_Photo_Editor.jpg"
                         alt="Gokulan V"
                         className="w-full h-full object-cover object-top"
                     />
@@ -61,7 +61,7 @@ const About = () => {
 
                     <div className="pt-2 md:pt-4">
                         <a
-                            href="/dist/Gokulan Resume-2.pdf"
+                            href="/Gokulan Resume-2.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center justify-center px-5 md:px-6 py-2.5 md:py-3 border border-black text-black text-sm md:text-base rounded-full font-medium hover:bg-black hover:text-white transition-colors"
