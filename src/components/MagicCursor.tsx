@@ -9,7 +9,6 @@ interface Sparkle {
 
 const MagicCursor = () => {
     const [sparkles, setSparkles] = useState<Sparkle[]>([]);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
         let lastTime = Date.now();
@@ -17,7 +16,6 @@ const MagicCursor = () => {
 
         const handleMouseMove = (e: MouseEvent) => {
             const currentTime = Date.now();
-            setMousePos({ x: e.clientX, y: e.clientY });
 
             // Throttle sparkle generation
             if (currentTime - lastTime > 50) {
