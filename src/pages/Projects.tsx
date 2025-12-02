@@ -4,14 +4,6 @@ import ProjectCard from '@/components/ProjectCard';
 const Projects = () => {
     const projects = [
         {
-            title: "La Patisserie - Full-Stack E-Commerce",
-            description: "A modern online ordering platform for a bakery featuring handcrafted desserts. Complete e-commerce solution with secure payments, delivery/pickup options, loyalty rewards, and real-time order tracking.",
-            technologies: ["React", "Node.js", "Express", "MongoDB", "Stripe", "Full-Stack"],
-            image: "/la-pat.png",
-            github: "https://github.com/GokulanV7/La_Patisserie-FullStack-",
-            demo: "https://lapatisserie.shop/",
-        },
-        {
             title: "Falo - AI Misinformation Detection",
             description: "An intelligent guardian against misinformation. Detects fake news with 95%+ accuracy using advanced ML algorithms and NLP. Features voice intelligence and real-time verification.",
             technologies: ["Flutter", "Python", "FastAPI", "Machine Learning", "NLP"],
